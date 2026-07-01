@@ -1,0 +1,37 @@
+{
+  "name": "dormflow-aachen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DormFlow Aachen: Dormitory Maintenance & Shared-Facility Management Enterprise Monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm --workspace=apps/api-node run dev",
+    "dev:react": "npm --workspace=apps/student-portal-react run dev",
+    "dev:angular": "npm --workspace=apps/manager-dashboard-angular run dev",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "db:migrate": "npm --workspace=apps/api-node run db:migrate",
+    "db:seed": "npm --workspace=apps/api-node run db:seed"
+  },
+  "keywords": [
+    "dormitory-management",
+    "facility-maintenance",
+    "react",
+    "angular",
+    "nestjs",
+    "nodejs",
+    "storybook",
+    "web-components",
+    "docker",
+    "kubernetes",
+    "azure"
+  ],
+  "author": "Monika Sompuram <monikareddy711@gmail.com>",
+  "license": "MIT"
+}
