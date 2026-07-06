@@ -1,0 +1,19 @@
+{
+  "name": "@dormflow/design-tokens",
+  "version": "1.0.0",
+  "description": "Design tokens, CSS custom properties, and SCSS mixins for DormFlow Aachen",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "styles"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
