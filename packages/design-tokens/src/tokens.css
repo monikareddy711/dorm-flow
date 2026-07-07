@@ -1,0 +1,37 @@
+:root {
+  --dormflow-primary: #005691;
+  --dormflow-primary-light: #0077c8;
+  --dormflow-primary-dark: #003a61;
+  --dormflow-primary-soft: #eaf3f9;
+  
+  --dormflow-secondary: #008479;
+  --dormflow-secondary-light: #20b2aa;
+  
+  --dormflow-status-submitted: #6b7280;
+  --dormflow-status-reviewed: #3b82f6;
+  --dormflow-status-assigned: #8b5cf6;
+  --dormflow-status-in-progress: #f59e0b;
+  --dormflow-status-resolved: #10b981;
+  --dormflow-status-closed: #4b5563;
+  --dormflow-status-rejected: #ef4444;
+
+  --dormflow-urgency-low: #10b981;
+  --dormflow-urgency-medium: #3b82f6;
+  --dormflow-urgency-high: #f97316;
+  --dormflow-urgency-emergency: #dc2626;
+
+  --dormflow-bg-app: #f8fafc;
+  --dormflow-bg-card: #ffffff;
+  --dormflow-border: #e2e8f0;
+  --dormflow-text-main: #0f172a;
+  --dormflow-text-muted: #64748b;
+  --dormflow-text-light: #94a3b8;
+  --dormflow-text-inverse: #ffffff;
+
+  --dormflow-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --dormflow-radius-sm: 4px;
+  --dormflow-radius-md: 8px;
+  --dormflow-radius-lg: 12px;
+  --dormflow-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --dormflow-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
