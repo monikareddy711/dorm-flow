@@ -14,3 +14,4 @@
 - [2026-07-08] test: add regression test for duplicate issue suggestion threshold
 - [2026-07-08] chore: optimize docker build caching layers for node modules
 - [2026-07-09] refactor: harmonize button variants between React and Angular UI layers
+- [2026-07-09] refactor: optimize bundle chunks and clean up unused imports
