@@ -1,0 +1,163 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  RESIDENT
+  MANAGER
+  TECHNICIAN
+}
+
+enum IssueStatus {
+  SUBMITTED
+  REVIEWED
+  ASSIGNED
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  REJECTED
+}
+
+enum IssueCategory {
+  HEATING
+  INTERNET
+  WATER
+  ELECTRICITY
+  LAUNDRY
+  KITCHEN
+  FURNITURE
+  CLEANLINESS
+  OTHER
+}
+
+enum IssueUrgency {
+  LOW
+  MEDIUM
+  HIGH
+  EMERGENCY
+}
+
+enum LocationType {
+  PRIVATE_ROOM
+  SHARED_KITCHEN
+  LAUNDRY_ROOM
+  HALLWAY
+  OUTDOOR_AREA
+  OTHER
+}
+
+enum CommentVisibility {
+  PUBLIC
+  INTERNAL
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  displayName  String
+  role         UserRole      @default(RESIDENT)
+  buildingId   String?
+  roomNumber   String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  building     Building?     @relation(fields: [buildingId], references: [id])
+  createdIssues Issue[]      @relation("CreatedIssues")
+  assignedIssues Issue[]     @relation("AssignedIssues")
+  comments     Comment[]
+  history      IssueStatusHistory[]
+  following    IssueFollower[]
+
+  @@map("users")
+}
+
+model Building {
+  id        String   @id @default(uuid())
+  name      String
+  address   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  issues    Issue[]
+
+  @@map("buildings")
+}
+
+model Issue {
+  id                 String              @id @default(uuid())
+  title              String
+  description        String
+  category           IssueCategory
+  urgency            IssueUrgency
+  status             IssueStatus         @default(SUBMITTED)
+  locationType       LocationType        @default(PRIVATE_ROOM)
+  buildingId         String
+  roomNumber         String?
+  createdByUserId    String
+  assignedToUserId   String?
+  duplicateOfIssueId String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  resolvedAt         DateTime?
+
+  building           Building            @relation(fields: [buildingId], references: [id])
+  createdByUser      User                @relation("CreatedIssues", fields: [createdByUserId], references: [id])
+  assignedToUser     User?               @relation("AssignedIssues", fields: [assignedToUserId], references: [id])
+  comments           Comment[]
+  history            IssueStatusHistory[]
+  followers          IssueFollower[]
+
+  @@index([buildingId])
+  @@index([status])
+  @@index([category])
+  @@map("issues")
+}
+
+model Comment {
+  id         String            @id @default(uuid())
+  issueId    String
+  authorId   String
+  content    String
+  visibility CommentVisibility @default(PUBLIC)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  issue      Issue             @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  author     User              @relation(fields: [authorId], references: [id])
+
+  @@map("comments")
+}
+
+model IssueStatusHistory {
+  id             String       @id @default(uuid())
+  issueId        String
+  previousStatus IssueStatus?
+  newStatus      IssueStatus
+  changedByUserId String
+  note           String?
+  createdAt      DateTime     @default(now())
+
+  issue          Issue        @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  changedByUser  User         @relation(fields: [changedByUserId], references: [id])
+
+  @@map("issue_status_history")
+}
+
+model IssueFollower {
+  issueId   String
+  userId    String
+  createdAt DateTime @default(now())
+
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([issueId, userId])
+  @@map("issue_followers")
+}
