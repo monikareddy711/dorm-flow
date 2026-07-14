@@ -21,3 +21,4 @@
 - [2026-07-12] fix: resolve edge case in date parsing for status history items
 - [2026-07-13] perf: optimize query filters and indexing on status and category
 - [2026-07-13] test: verify Web Component custom event dispatching across shadow DOM
+- [2026-07-14] chore: update dependency audit policies and security thresholds
