@@ -28,3 +28,4 @@
 - [2026-07-16] fix: ensure correct aria-expanded states on collapsible navigation
 - [2026-07-16] test: add regression test for duplicate issue suggestion threshold
 - [2026-07-17] chore: optimize docker build caching layers for node modules
+- [2026-07-17] refactor: harmonize button variants between React and Angular UI layers
