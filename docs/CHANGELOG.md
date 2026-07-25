@@ -41,3 +41,4 @@
 - [2026-07-23] style: improve contrast ratios to adhere strictly to WCAG 2.1 AA
 - [2026-07-24] docs: expand API request correlation ID usage examples
 - [2026-07-24] fix: ensure correct aria-expanded states on collapsible navigation
+- [2026-07-25] test: add regression test for duplicate issue suggestion threshold
