@@ -48,3 +48,4 @@
 - [2026-07-28] test: add unit coverage for form edge cases and invalid input
 - [2026-07-28] style: refine responsive padding and touch target sizes for mobile viewports
 - [2026-07-29] docs: clarify sprint acceptance criteria and review notes
+- [2026-07-29] fix: resolve edge case in date parsing for status history items
