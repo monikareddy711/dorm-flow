@@ -53,3 +53,4 @@
 - [2026-07-30] test: verify Web Component custom event dispatching across shadow DOM
 - [2026-07-31] chore: update dependency audit policies and security thresholds
 - [2026-07-31] refactor: streamline service observables and error recovery logic
+- [2026-08-01] style: improve contrast ratios to adhere strictly to WCAG 2.1 AA
