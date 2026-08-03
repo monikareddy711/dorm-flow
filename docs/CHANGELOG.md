@@ -55,3 +55,4 @@
 - [2026-07-31] refactor: streamline service observables and error recovery logic
 - [2026-08-01] style: improve contrast ratios to adhere strictly to WCAG 2.1 AA
 - [2026-08-02] docs: expand API request correlation ID usage examples
+- [2026-08-03] fix: ensure correct aria-expanded states on collapsible navigation
