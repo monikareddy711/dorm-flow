@@ -64,3 +64,4 @@
 - [2026-08-06] style: refine responsive padding and touch target sizes for mobile viewports
 - [2026-08-06] docs: clarify sprint acceptance criteria and review notes
 - [2026-08-07] fix: resolve edge case in date parsing for status history items
+- [2026-08-07] perf: optimize query filters and indexing on status and category
