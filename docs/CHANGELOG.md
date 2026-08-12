@@ -72,3 +72,4 @@
 - [2026-08-11] docs: expand API request correlation ID usage examples
 - [2026-08-11] fix: ensure correct aria-expanded states on collapsible navigation
 - [2026-08-12] test: add regression test for duplicate issue suggestion threshold
+- [2026-08-12] chore: optimize docker build caching layers for node modules
