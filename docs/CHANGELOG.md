@@ -75,3 +75,4 @@
 - [2026-08-12] chore: optimize docker build caching layers for node modules
 - [2026-08-13] refactor: harmonize button variants between React and Angular UI layers
 - [2026-08-13] refactor: optimize bundle chunks and clean up unused imports
+- [2026-08-14] test: add unit coverage for form edge cases and invalid input
