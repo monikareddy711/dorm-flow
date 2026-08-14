@@ -1,0 +1,19 @@
+{
+  "name": "@dormflow/web-components",
+  "version": "1.0.0",
+  "description": "Framework-independent custom element status widget for DormFlow Aachen",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "serve demo"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
