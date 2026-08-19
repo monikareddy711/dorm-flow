@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DormFlow Web Component Standalone Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+    }
+    .header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    h1 {
+      color: #005691;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #64748b;
+      margin: 0;
+    }
+    .widget-container {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .event-log {
+      margin-top: 24px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #0f172a;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  </style>
+  <script type="module" src="../src/index.ts"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>DormFlow Web Component Integration</h1>
+      <p>Demonstrating standard Custom Element &lt;dormflow-issue-status&gt; embedded into plain HTML.</p>
+    </div>
+
+    <div class="widget-container">
+      <h3>Heating Issue (Kastanienweg)</h3>
+      <dormflow-issue-status
+        issue-id="iss-101"
+        api-base-url="http://localhost:4000">
+      </dormflow-issue-status>
+
+      <h3>Laundry Room Issue (Mattschö-Moll-Weg)</h3>
+      <dormflow-issue-status
+        issue-id="iss-102"
+        api-base-url="http://localhost:4000">
+      </dormflow-issue-status>
+    </div>
+
+    <div class="event-log" id="log">
+      <strong>Browser Event Log (Listening to 'dormflow-open-issue'):</strong><br/>
+      Waiting for user interaction...
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('dormflow-open-issue', (e) => {
+      const log = document.getElementById('log');
+      const time = new Date().toLocaleTimeString();
+      log.innerHTML += `<div>[${time}] Received custom event <strong>dormflow-open-issue</strong>: ${JSON.stringify(e.detail)}</div>`;
+      log.scrollTop = log.scrollHeight;
+    });
+  </script>
+</body>
+</html>
