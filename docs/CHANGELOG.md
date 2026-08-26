@@ -95,3 +95,4 @@
 - [2026-08-24] docs: clarify sprint acceptance criteria and review notes
 - [2026-08-25] fix: resolve edge case in date parsing for status history items
 - [2026-08-25] perf: optimize query filters and indexing on status and category
+- [2026-08-26] test: verify Web Component custom event dispatching across shadow DOM
