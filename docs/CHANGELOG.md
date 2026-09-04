@@ -112,3 +112,4 @@
 - [2026-09-03] perf: optimize query filters and indexing on status and category
 - [2026-09-03] test: verify Web Component custom event dispatching across shadow DOM
 - [2026-09-04] chore: update dependency audit policies and security thresholds
+- [2026-09-04] refactor: streamline service observables and error recovery logic
