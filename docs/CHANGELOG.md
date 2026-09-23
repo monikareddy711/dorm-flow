@@ -144,3 +144,4 @@
 - [2026-09-22] chore: update dependency audit policies and security thresholds
 - [2026-09-22] refactor: streamline service observables and error recovery logic
 - [2026-09-23] style: improve contrast ratios to adhere strictly to WCAG 2.1 AA
+- [2026-09-23] docs: expand API request correlation ID usage examples
