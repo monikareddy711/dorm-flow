@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dormflow-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dormflow_user
+      POSTGRES_PASSWORD: dormflow_secure_password
+      POSTGRES_DB: dormflow_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U dormflow_user -d dormflow_db']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.api
+    container_name: dormflow-api
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgresql://dormflow_user:dormflow_secure_password@postgres:5432/dormflow_db?schema=public
+      JWT_SECRET: dormflow-aachen-super-secret-key-2026
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  student-portal:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.react
+    container_name: dormflow-student-portal
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    depends_on:
+      - api
+
+  manager-dashboard:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.angular
+    container_name: dormflow-manager-dashboard
+    restart: unless-stopped
+    ports:
+      - '4200:80'
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
+    driver: local

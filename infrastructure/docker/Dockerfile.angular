@@ -1,0 +1,26 @@
+# Multi-stage Dockerfile for Angular Manager Dashboard
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package.json ./
+COPY packages/ ./packages/
+COPY apps/manager-dashboard-angular/package.json ./apps/manager-dashboard-angular/
+
+RUN npm install
+
+COPY tsconfig.base.json ./
+COPY apps/manager-dashboard-angular/ ./apps/manager-dashboard-angular/
+
+WORKDIR /app/apps/manager-dashboard-angular
+RUN npm run build -- --configuration production
+
+# Nginx runtime stage
+FROM nginx:alpine AS runner
+
+COPY infrastructure/docker/nginx.angular.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/apps/manager-dashboard-angular/dist/manager-dashboard-angular /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
