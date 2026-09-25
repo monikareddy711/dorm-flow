@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dormflow-ingress
+  namespace: dormflow
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+    - hosts:
+        - dormflow.aachen.de
+        - manager.dormflow.aachen.de
+        - api.dormflow.aachen.de
+      secretName: dormflow-tls-certs
+  rules:
+    - host: dormflow.aachen.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dormflow-react-service
+                port:
+                  number: 80
+    - host: manager.dormflow.aachen.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dormflow-angular-service
+                port:
+                  number: 80
+    - host: api.dormflow.aachen.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dormflow-api-service
+                port:
+                  number: 4000

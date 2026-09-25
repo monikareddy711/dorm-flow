@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dormflow-api
+  namespace: dormflow
+  labels:
+    app: dormflow-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dormflow-api
+  template:
+    metadata:
+      labels:
+        app: dormflow-api
+    spec:
+      containers:
+        - name: api
+          image: dormflowacr.azurecr.io/dormflow-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - configMapRef:
+                name: dormflow-config
+            - secretRef:
+                name: dormflow-secrets
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 4000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dormflow-api-service
+  namespace: dormflow
+spec:
+  type: ClusterIP
+  selector:
+    app: dormflow-api
+  ports:
+    - port: 4000
+      targetPort: 4000

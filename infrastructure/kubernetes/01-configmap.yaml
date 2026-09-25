@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dormflow-config
+  namespace: dormflow
+data:
+  NODE_ENV: "production"
+  PORT: "4000"
+  CORS_ORIGIN: "https://dormflow.aachen.de,https://manager.dormflow.aachen.de"

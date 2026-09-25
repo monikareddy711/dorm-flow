@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dormflow-angular
+  namespace: dormflow
+  labels:
+    app: dormflow-angular
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dormflow-angular
+  template:
+    metadata:
+      labels:
+        app: dormflow-angular
+    spec:
+      containers:
+        - name: angular
+          image: dormflowacr.azurecr.io/dormflow-manager-dashboard:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dormflow-angular-service
+  namespace: dormflow
+spec:
+  type: ClusterIP
+  selector:
+    app: dormflow-angular
+  ports:
+    - port: 80
+      targetPort: 80
