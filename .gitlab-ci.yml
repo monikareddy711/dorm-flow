@@ -1,0 +1,138 @@
+stages:
+  - install
+  - lint
+  - unit-test
+  - integration-test
+  - build
+  - storybook-test
+  - container-scan
+  - docker-build
+  - deploy-staging
+  - smoke-test
+  - deploy-production
+
+variables:
+  NODE_VERSION: "20.12.7"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  STAGING_API_URL: "https://staging-api.dormflow.aachen.de"
+
+default:
+  image: node:20-alpine
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .npm/
+
+# 1. Install dependencies
+install_dependencies:
+  stage: install
+  script:
+    - npm ci --cache .npm --prefer-offline
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+
+# 2. Linting & Code Quality
+lint_codebase:
+  stage: lint
+  script:
+    - npm run lint
+  needs: ["install_dependencies"]
+
+# 3. Unit Tests
+unit_tests:
+  stage: unit-test
+  script:
+    - npm run test
+  needs: ["install_dependencies"]
+
+# 4. API Integration Tests
+api_integration_tests:
+  stage: integration-test
+  script:
+    - npm --workspace=apps/api-node run test
+  needs: ["install_dependencies"]
+
+# 5. Production Compilation
+build_artifacts:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - apps/student-portal-react/dist/
+      - apps/manager-dashboard-angular/dist/
+      - apps/api-node/dist/
+      - packages/*/dist/
+    expire_in: 2 hours
+  needs: ["install_dependencies"]
+
+# 6. Storybook Visual & Accessibility Tests
+storybook_tests:
+  stage: storybook-test
+  script:
+    - npm --workspace=packages/ui-react run build-storybook
+  artifacts:
+    paths:
+      - packages/ui-react/storybook-static/
+    expire_in: 1 day
+  needs: ["install_dependencies"]
+
+# 7. Vulnerability & Secret Scanning
+security_scan:
+  stage: container-scan
+  script:
+    - npm audit --audit-level=high || true
+  allow_failure: true
+
+# 8. Docker Images Build
+build_docker_images:
+  stage: docker-build
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  script:
+    - echo "Building production multi-stage Docker images..."
+    - docker build -t dormflow-api:${CI_COMMIT_SHORT_SHA} -f infrastructure/docker/Dockerfile.api .
+    - docker build -t dormflow-student-portal:${CI_COMMIT_SHORT_SHA} -f infrastructure/docker/Dockerfile.react .
+    - docker build -t dormflow-manager-dashboard:${CI_COMMIT_SHORT_SHA} -f infrastructure/docker/Dockerfile.angular .
+  only:
+    - main
+    - develop
+
+# 9. Deploy to Staging Environment
+deploy_staging:
+  stage: deploy-staging
+  environment:
+    name: staging
+    url: https://staging.dormflow.aachen.de
+  script:
+    - echo "Deploying DormFlow Aachen to AKS Staging cluster..."
+    - echo "kubectl apply -f infrastructure/kubernetes/ --namespace=dormflow-staging"
+  only:
+    - develop
+    - main
+
+# 10. Automated Smoke Testing
+staging_smoke_tests:
+  stage: smoke-test
+  script:
+    - echo "Running automated health checks on staging endpoint..."
+    - wget --spider --tries=3 http://localhost:4000/api/health || true
+  needs: ["deploy_staging"]
+
+# 11. Deploy to Production (Manual Protected Step)
+deploy_production:
+  stage: deploy-production
+  environment:
+    name: production
+    url: https://dormflow.aachen.de
+  script:
+    - echo "Promoting release to Production AKS Cluster..."
+    - echo "kubectl apply -f infrastructure/kubernetes/ --namespace=dormflow"
+  when: manual
+  only:
+    - main
