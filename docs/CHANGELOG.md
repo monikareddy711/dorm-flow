@@ -152,3 +152,4 @@
 - [2026-09-26] refactor: optimize bundle chunks and clean up unused imports
 - [2026-09-27] test: add unit coverage for form edge cases and invalid input
 - [2026-09-28] style: refine responsive padding and touch target sizes for mobile viewports
+- [2026-09-28] docs: clarify sprint acceptance criteria and review notes
