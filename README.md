@@ -1,18 +1,18 @@
-# DormFlow Aachen 🏢
+# DormFlow Aachen
 
 > **Dormitory Maintenance and Shared-Facility Management Enterprise Platform**  
 > A responsive web application enabling students in Aachen dormitories to report room or facility issues, avoid duplicate reports, follow repair progress, and communicate with facility management.
 
 ---
 
-## 📌 Executive Summary
+## Executive Summary
 
 - **Problem:** Students in Aachen university dormitories (Kastanienweg, Eckertweg, Halifaxstraße, Mattschö-Moll-Weg) face fragmented maintenance communication (untracked emails, WhatsApp groups, hallway chats). Residents cannot see whether a shared washing machine or heating breakdown has already been reported, while facility managers spend hours consolidating duplicate reports.
 - **Solution:** DormFlow delivers a **React-based Student Portal**, an **Angular-based Manager Dashboard**, a **framework-independent native Web Component**, a **Node.js REST API with Prisma ORM**, containerized multi-stage **Docker deployments**, dual **GitLab CI/CD & Jenkins** pipelines, **Kubernetes manifests**, and target **Azure Cloud** infrastructure.
 
 ---
 
-## 🏛️ Architecture & Monorepo Structure
+## Architecture & Monorepo Structure
 
 ```
 dormflow-aachen/
@@ -43,7 +43,7 @@ dormflow-aachen/
 
 ---
 
-## 🚀 Technology Stack Matrix
+## Technology Stack Matrix
 
 | Area | Technology | Architectural Role in DormFlow |
 | :--- | :--- | :--- |
@@ -59,7 +59,7 @@ dormflow-aachen/
 
 ---
 
-## 🔑 Demo User Accounts
+## Demo User Accounts
 
 All pre-seeded demo accounts use password: `Password123!`
 
@@ -72,7 +72,7 @@ All pre-seeded demo accounts use password: `Password123!`
 
 ---
 
-## 🏃 Local Quickstart
+## Local Quickstart
 
 ### Option A: Docker Compose (Entire Stack)
 
@@ -108,7 +108,7 @@ npm run dev:angular
 
 ---
 
-## 🧩 Reusable Web Component: `<dormflow-issue-status>`
+## Reusable Web Component: `<dormflow-issue-status>`
 
 A framework-agnostic Custom Element for embedding maintenance updates on external websites:
 
@@ -133,7 +133,7 @@ A framework-agnostic Custom Element for embedding maintenance updates on externa
 
 ---
 
-## 🚢 CI/CD & Cloud Infrastructure
+## CI/CD & Cloud Infrastructure
 
 ### GitLab CI/CD Pipeline Stages
 1. `install`: Dependency installation with caching
@@ -162,7 +162,7 @@ A secondary declarative `Jenkinsfile` provides a portable, self-hosted CI pipeli
 
 ---
 
-## 📑 Architecture Decision Records (ADRs)
+## Architecture Decision Records (ADRs)
 
 Documented in `docs/decisions/`:
 - **ADR-001:** React for Residents & Angular for Facility Management
@@ -176,29 +176,7 @@ Documented in `docs/decisions/`:
 
 ---
 
-## 🎯 5-Minute Recruiter Demo Script
-
-1. **Minute 1: Problem & Pitch** — Show problem of fragmented maintenance communication in Aachen student housing. Introduce DormFlow architecture.
-2. **Minute 2: Resident Experience** — Log in as Lina (`lina@rwth-aachen.de`) on a mobile 360px viewport. Start reporting a heating leak. Demonstrate live duplicate suggestion widget. Submit report and view chronological status timeline.
-3. **Minute 3: Manager Workflow** — Log in as Daniel (`daniel@dormflow.rwth.de`) on Angular Dashboard. Filter open heating issues, assign ticket to technician Marcus Weber, advance status to "IN_PROGRESS", and add an internal technician note.
-4. **Minute 4: Cross-Framework Integration** — Open Storybook UI stories (`packages/ui-react`). Demonstrate native `<dormflow-issue-status>` Web Component functioning independently in plain HTML, React, and Angular.
-5. **Minute 5: Engineering & Cloud Quality** — Walk through GitLab CI pipeline, Docker multi-stage images, Kubernetes manifests, Azure Bicep template, and ADRs.
-
----
-
-## 💼 Resume Achievement Bullets
-
-- Built a full-stack dormitory facility management platform with a mobile-first **React** resident portal and an **Angular** facility management dashboard.
-- Engineered a **Node.js/TypeScript REST API** with **Prisma ORM** and **PostgreSQL**, implementing JWT authentication, role guards, correlation ID logging, and OpenAPI documentation.
-- Created a framework-agnostic **native Web Component** with Shadow DOM, integrated seamlessly across plain HTML, React, and Angular without runtime dependencies.
-- Authored a reusable design system in **Storybook** with design tokens, responsive SCSS breakpoints, and WCAG 2.1 AA accessibility compliance.
-- Automated end-to-end testing, linting, and multi-stage container builds using **GitLab CI/CD** and **Jenkins**.
-- Authored **Kubernetes manifests** (Deployments, Services, Ingress, HPA) and **Azure Bicep** templates with an architectural AWS service equivalence mapping.
-- Documented 8 formal **Architecture Decision Records (ADRs)** and agile sprint retrospectives.
-
----
-
-## 👤 Author
+## Author
 
 **Monika Sompuram**  
 Email: [monikareddy711@gmail.com](mailto:monikareddy711@gmail.com)  
